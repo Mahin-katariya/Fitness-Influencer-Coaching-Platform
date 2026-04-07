@@ -1,0 +1,111 @@
+clients[icon: user, color: blue]{ 
+  client_id int pk
+  name string
+  email string
+  hashPassword
+  phone string
+  gender string
+  dob string
+  height string
+
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+trainers[icon: user, color:red] {
+  trainer_id int pk
+  name string
+  email string
+  hashPassword string
+  phone string
+  photo string
+  is_active boolean
+  createdAt timestamp
+  updatedAt timestamp 
+}
+
+
+plans[]{
+  plan_id int pk
+  trainer_id int fk
+  plan_title string 
+  plan_type string
+  duration_time timestamp
+  price decimal
+  
+  createdAt timestamp
+  updatedAt timestamp 
+}
+
+subscription[]{
+  subscription_id int pk
+  client_id string fk
+  plan_id string fk
+  start_date timestamp
+  end_date timestamp
+  billing_cycle enum("weekly","monthly","yearly")
+  next_cycle date
+  status enum("active", "cancelled", "paused")
+  createdAt timestamp
+  updatedAt timestamp 
+}
+
+progress[]{
+  progress_id int 
+  checkins_id int fk
+  weight_kg int
+  body_fat decimal
+  chest decimal
+  waist decimal
+  arm decimal
+  thigh decimal
+  hip decimal
+
+  createdAt timestamp
+  updatedAt timestamp 
+}
+
+sessions[]{
+  session_id int pk
+  subscription_id int fk
+  session_type enum("consultation", "course")
+  scheduled_at timestamp
+  duration_time int
+  meeting_link string
+
+  createdAt timestamp
+  updatedAt timestamp 
+}
+
+checkins[]{
+  checkins_id
+  progress_id int fk
+  checkin_week int
+  submitted_at timestamp
+  trainer_feedback string
+  status boolean
+
+  createdAt timestamp
+  updatedAt timestamp 
+}
+
+payments[]{
+  payments_id int pk
+  subscription_id int fk
+  amount decimal
+  payments_status boolean
+  paid_at timestamp
+  
+  createdAt timestamp
+  updatedAt timestamp 
+}
+
+trainers.trainer_id < plans.trainer_id
+clients.client_id < subscription.client_id
+plans.plan_id < subscription.plan_id
+subscription.subscription_id  < payments.subscription_id
+subscription.subscription_id <sessions.subscription_id
+checkins.checkins_id - progress.checkins_id
+
+// subscription mai one time and reccuring payment handle 
+// if we are using subscription id we will be getting clientid, trainerid , planid, so whenever required we will be joining tables to keep the relation simple
