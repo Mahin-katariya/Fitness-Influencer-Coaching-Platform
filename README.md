@@ -1,6 +1,6 @@
 # Online Fitness Coaching Platform - ER Diagram
 
-![Screenshot](images/screenshot.png)
+![Screenshot](diagram-export-4-8-2026-12_44_30-AM.png)
 
 Database design for a fitness influencer's online coaching system. Replaces manual Instagram + calls workflow with proper management of **clients, plans, subscriptions, sessions, progress tracking, and payments**.
 
